@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -10,6 +12,7 @@ public class EntryPoint {
 	private Map<String, Course> courses = new HashMap<>();
 	
 	public EntryPoint() {
+		loadData();
 		System.out.println("?");
 		String command = input.nextLine();
 		while (true) {
@@ -36,7 +39,37 @@ public class EntryPoint {
 	}
 	
 	private void loadData() {
-		
+		try {
+			Scanner scan = new Scanner(new File("data.txt"));
+			while (scan.hasNext()) {
+				String code = scan.next();
+				String grade = scan.next();
+				String name = scan.nextLine().trim();
+				
+				Course c;
+				if (!courses.containsKey(code)) {
+					c = new Course(code);
+					courses.put(code, c);
+				} else {
+					c = courses.get(code);
+				}
+				Student s = students.get(name);
+				if (s == null) {
+					s = new Student(name, (int)(Math.random() * 10000000));
+					students.put(name, s);
+				}
+				
+				if ("-".equals(grade)) {
+					c.addStudent(s);
+				} else {
+					c.assignGrade(s, grade);
+					s.receiveGrade(c, grade);
+				}
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void lookAtCourse() {
@@ -127,7 +160,7 @@ public class EntryPoint {
 		if (s == null) {
 			System.out.println("No such student.");
 		} else {
-			System.out.println(s);
+			System.out.println(s.getInfo());
 		}
 	}
 	private void lookUpByID() {

@@ -22,6 +22,14 @@ public class Student {
 		return name + " (" + id + ")";
 	}
 	
+	public String getInfo() {
+		String ret = name + " (" + id + ")";
+		for (String code : grades.keySet()) {
+			ret = ret + "\n" + grades.get(code) + "\t" + code;
+		}
+		return ret;
+	}
+	
 	public String getName() {
 		return name;
 	}

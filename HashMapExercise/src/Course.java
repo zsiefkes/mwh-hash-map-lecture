@@ -1,11 +1,15 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Course {
 	private String courseCode;
+	// These two aren't used
 	private List<Student> enrolled = new ArrayList<>();
+	private Set<Student> enrolledSet = new HashSet<>();
 	
 	private Map<Student, String> grades = new HashMap<>();
 	
